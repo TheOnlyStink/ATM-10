@@ -13,7 +13,7 @@ let config
 let bannedBlockEntities
 
 // disabled, KubeJS/Rhino bug
-if (false) { // !Platform.isClientEnvironment()
+if (!Platform.isClientEnvironment()) {
   let configPath = "server_banlist_config.json"
   let defaultConfig = {
     server: {
@@ -95,7 +95,7 @@ let removeBlockEntities = (/** @type {$ChunkEvent$Load_} */ event) => {
     if (event.chunk.persistedStatus != "minecraft:full") return
     event.chunk.getBlockEntities().forEach((pos, be) => {
       /** @type {$ResourceLocation_} */
-      let beRL = be.type.getKey(be.type)
+      let beRL = be.getType().getKey(be.getType())
       if (bannedBlockEntities.contains(beRL.toString())) {
         blocksToRemove.add(pos)
       }
